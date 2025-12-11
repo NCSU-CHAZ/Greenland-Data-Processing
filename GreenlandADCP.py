@@ -105,6 +105,17 @@ target_date_end = datetime(2023, 7, 22, 13, 22)
 iloc_idx_start = df.index.get_indexer([target_date_start], method='nearest')
 iloc_idx_end = df.index.get_indexer([target_date_end], method='nearest')
 
+# depth statistics for paper
+turbidity_current_depth_start = 45
+turbidity_current = current.iloc[turbidity_current_depth_start:-1,int(iloc_idx_start):int(iloc_idx_end)]
+turbidity_current.min().min()
+turbidity_current.max().max()
+turbidity_current.mean().mean()
+flat_tc = turbidity_current.values.flatten()
+pylab.hist(flat_tc[~np.isnan(flat_tc)])
+plt.xlabel("velocity (m/s)")
+plt.ylabel("density")
+
 fig, ax = plt.subplots(figsize=(12, 3))
 plt.pcolormesh(
     timestamp[int(iloc_idx_start):int(iloc_idx_end)],
